@@ -91,6 +91,15 @@ load_custom_reports_stylesheets(void)
     if (is_user_config_loaded)
         return;
     else is_user_config_loaded = TRUE;
+ 
+    update_message("loading user configuration");
+    {
+        gchar *config_filename;
+        config_filename = g_build_filename (gnc_userconfig_dir (),
+                                                "config-user.scm", (char *)NULL);
+        gfec_try_load(config_filename);
+        g_free(config_filename);
+    }
 
     update_message("loading saved reports");
     try_load_config_array(saved_report_files);
